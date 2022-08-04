@@ -9,12 +9,16 @@
 </head>
 <body>
 <nav>
-    <a href="#"><b>Blog</b></a> |
-    <a href="#">Create Post</a> |
-    <a href="#">My Posts</a> |
-    <a href="#">Register</a> |
-    <a href="#">Login</a> |
-    <a href="#">Logout</a>
+    <a href="{{ route('home') }}"><b>Blog</b></a> |
+    @auth
+        <a href="#">Create Post</a> |
+        <a href="#">My Posts</a> |
+        <a href="{{ route('logout') }}">Logout</a>
+    @endauth
+    @guest
+        <a href="{{ route('register') }}">Register</a> |
+        <a href="{{ route('auth') }}">Login</a>
+    @endguest
 </nav>
 
 @yield('content')
