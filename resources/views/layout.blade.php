@@ -11,9 +11,9 @@
 <nav>
     <a href="{{ route('home') }}"><b>Blog</b></a> |
     @auth
-        <a href="#">Create Post</a> |
+        <a href="{{ route('create-post') }}">Create Post</a> |
         <a href="#">My Posts</a> |
-        <a href="{{ route('logout') }}">Logout</a>
+        <a href="{{ route('logout') }}">Logout ({{ Auth::user()->email }})</a>
     @endauth
     @guest
         <a href="{{ route('register') }}">Register</a> |
