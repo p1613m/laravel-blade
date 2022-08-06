@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>Create Post</h1>
-<form action="{{ route('create-post-send') }}" method="post">
+<form action="{{ route('create-post-send') }}" method="post" enctype="multipart/form-data">
     @csrf
     <label>Category:
         <select name="category_id">

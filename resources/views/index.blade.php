@@ -2,32 +2,14 @@
 
 @section('content')
 <h1>Blog</h1>
-<article>
-    <h2>Post title</h2>
-    <p><u><a href="#">User</a>. 04.08.2022</u></p>
-    <p>Description</p>
-    <a href="#">Read more..</a>
-    <hr>
-</article>
-<article>
-    <h2>Post title</h2>
-    <p><u><a href="#">User</a>. 04.08.2022</u></p>
-    <p>Description</p>
-    <a href="#">Read more..</a>
-    <hr>
-</article>
-<article>
-    <h2>Post title</h2>
-    <p><u><a href="#">User</a>. 04.08.2022</u></p>
-    <p>Description</p>
-    <a href="#">Read more..</a>
-    <hr>
-</article>
-<article>
-    <h2>Post title</h2>
-    <p><u><a href="#">User</a>. 04.08.2022</u></p>
-    <p>Description</p>
-    <a href="#">Read more..</a>
-    <hr>
-</article>
+    @foreach($posts as $post)
+        <article>
+            <h2>{{ $post->title }}</h2>
+            <p><u><a href="#">{{ $post->user->name }}</a>. {{ $post->created_at->format('d.m.Y H:i') }}</u></p>
+            <p>{{ $post->description }}</p>
+{{--            <a href="{{ route('show-post', [ 'post' => $post ]) }}">Read more..</a>--}}
+            <a href="{{ route('show-post', $post) }}">Read more..</a>
+            <hr>
+        </article>
+    @endforeach
 @endsection

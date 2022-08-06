@@ -28,7 +28,11 @@ Route::get('/auth', [AuthController::class, 'authForm'])->name('auth');
 Route::post('/auth', [AuthController::class, 'auth'])->name('auth-send');
 Route::middleware('auth')->get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('show-post');
+
 Route::middleware('auth')->group(function() {
     Route::get('/create-post', [PostController::class, 'create'])->name('create-post');
     Route::post('/create-post', [PostController::class, 'store'])->name('create-post-send');
+    Route::get('/my-posts', [PostController::class, 'my'])->name('my-posts');
+    Route::get('/posts/{post}/delete', [PostController::class, 'delete'])->name('delete-post');
 });
