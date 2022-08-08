@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Http\Requests\PostUpdateRequest;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,6 +41,33 @@ class PostController extends Controller
     {
         if($post->user_id == Auth::id()) {
             $post->delete();
+        }
+
+        return redirect()->route('my-posts');
+    }
+
+    public function edit(Post $post)
+    {
+        if($post->user_id == Auth::id()) {
+            return view('edit-post', compact(['post']));
+            // compact(['post', 'user', 'comment']) =>
+            // [
+            //    'post' => $post,
+            //    'user' => $user,
+            //    'comment' => $comment,
+            // ]
+        }
+
+        return redirect()->route('my-posts');
+    }
+
+    public function update(Post $post, PostUpdateRequest $request)
+    {
+        if($post->user_id == Auth::id()) {
+            $post->update($request->validated());
+            if($request->file('image')) {
+                $post->fillImage($request->file('image'));
+            }
         }
 
         return redirect()->route('my-posts');

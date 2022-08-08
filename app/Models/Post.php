@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
@@ -24,6 +25,11 @@ class Post extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    public function category()
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
     /**
      * Fill post image
      * @param UploadedFile $file
@@ -37,5 +43,10 @@ class Post extends Model
 
         $this->image_path = $imageDirectory . '/' . $imageName;
         $this->save();
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return Storage::url($this->image_path);
     }
 }
