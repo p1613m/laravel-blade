@@ -30,6 +30,11 @@ class Post extends Model
         return $this->hasOne(Category::class, 'id', 'category_id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(PostComment::class, 'post_id', 'id')->orderBy('id', 'DESC');
+    }
+
     /**
      * Fill post image
      * @param UploadedFile $file

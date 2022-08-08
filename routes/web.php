@@ -29,6 +29,7 @@ Route::post('/auth', [AuthController::class, 'auth'])->name('auth-send');
 Route::middleware('auth')->get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('show-post');
+Route::post('/posts/{post}/comment', [PostController::class, 'comment'])->name('send-comment');
 
 Route::middleware('auth')->group(function() {
     Route::get('/create-post', [PostController::class, 'create'])->name('create-post');
@@ -37,4 +38,6 @@ Route::middleware('auth')->group(function() {
     Route::get('/posts/{post}/delete', [PostController::class, 'delete'])->name('delete-post');
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('edit-post');
     Route::post('/posts/{post}/edit', [PostController::class, 'update'])->name('edit-post-send');
+
+    Route::get('/comment/{comment}/delete', [PostController::class, 'deleteComment'])->name('delete-comment');
 });

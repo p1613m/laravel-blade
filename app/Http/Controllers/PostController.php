@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\PostUpdateRequest;
 use App\Models\Post;
+use App\Models\PostComment;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -71,5 +73,26 @@ class PostController extends Controller
         }
 
         return redirect()->route('my-posts');
+    }
+
+    public function comment(Post $post, CommentRequest $request)
+    {
+        $comment = $post->comments()->create($request->validated());
+
+        if(Auth::user()) {
+            $comment->user_id = Auth::id();
+            $comment->save();
+        }
+
+        return back();
+    }
+
+    public function deleteComment(PostComment $comment)
+    {
+        if(Auth::id() == $comment->post->user_id || Auth::id() == $comment->user_id) {
+            $comment->delete();
+        }
+
+        return back();
     }
 }
